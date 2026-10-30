@@ -151,7 +151,21 @@ function update() {
     });
 }
 
+rend
+
 renderSchedule();
 update();
 
-setInterval(update, 250);
+// Synchronizacja zegara z początkiem każdej sekundy
+function startClock() {
+    update();
+
+    const delay = 1000 - (Date.now() % 1000);
+
+    setTimeout(() => {
+        update();
+        setInterval(update, 1000);
+    }, delay);
+}
+
+startClock();
