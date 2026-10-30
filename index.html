@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <title>SleepyBell – Cyfrowy Dzwonek</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main class="app">
+
+        <header class="header">
+            <div class="brand">
+                <span class="brand-icon">◈</span>
+                <h1>Sleepy<span>Bell</span></h1>
+            </div>
+            <div class="online">
+                <span class="online-dot"></span>
+                SYSTEM ONLINE
+            </div>
+        </header>
+
+        <section class="clock-card">
+            <div class="clock-label">AKTUALNY CZAS</div>
+            <div id="clock">00:00:00</div>
+            <div id="date">Ładowanie daty...</div>
+        </section>
+
+        <section class="status-card">
+            <div class="status-info">
+                <span class="status-label">STATUS SYSTEMU</span>
+                <h2 id="status">OCZEKIWANIE</h2>
+                <p id="lesson">Ładowanie harmonogramu...</p>
+            </div>
+
+            <div class="countdown-box">
+                <span>DO NASTĘPNEJ ZMIANY</span>
+                <div id="countdown">--:--:--</div>
+            </div>
+        </section>
+
+        <section class="schedule-section">
+            <div class="section-heading">
+                <div>
+                    <span class="section-label">PLAN DNIA</span>
+                    <h2>Harmonogram lekcji</h2>
+                </div>
+                <span class="lesson-count">8 LEKCJI</span>
+            </div>
+
+            <div class="schedule" id="schedule"></div>
+        </section>
+
+        <footer>
+            <span>◈ SLEEPYBELL</span>
+            <span>CYFROWY DZWONEK SZKOLNY</span>
+            <span>VERSION 1.0</span>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
