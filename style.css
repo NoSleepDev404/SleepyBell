@@ -1,0 +1,271 @@
+
+:root {
+    --bg: #101827;
+    --card: #1D2A3D;
+    --blue: #3984F7;
+    --white: #F4F7FC;
+    --muted: #9BAEC7;
+    --green: #39C98A;
+    --orange: #F5AE52;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(ellipse at top, #1a3150 0%, transparent 55%),
+        var(--bg);
+    color: var(--white);
+    font-family: "Segoe UI", Arial, sans-serif;
+    padding: 30px 18px;
+}
+
+.app {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    color: var(--blue);
+    font-size: 32px;
+}
+
+.brand h1 {
+    font-size: 27px;
+    letter-spacing: 1px;
+}
+
+.brand h1 span {
+    color: var(--blue);
+}
+
+.online {
+    color: var(--green);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+.online-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    margin-right: 7px;
+    box-shadow: 0 0 10px var(--green);
+}
+
+.clock-card {
+    background: linear-gradient(135deg, #223752, var(--card));
+    border: 1px solid #314764;
+    border-radius: 18px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 15px 40px #0003;
+}
+
+.clock-label {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+#clock {
+    font-size: clamp(48px, 10vw, 76px);
+    font-weight: 750;
+    letter-spacing: 3px;
+    margin: 8px 0;
+    font-variant-numeric: tabular-nums;
+}
+
+#date {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.status-card {
+    margin-top: 18px;
+    background: var(--card);
+    border: 1px solid #2d405b;
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.status-label,
+.countdown-box > span {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+#status {
+    color: var(--blue);
+    font-size: 23px;
+    margin: 8px 0;
+}
+
+#lesson {
+    color: var(--white);
+    font-size: 15px;
+}
+
+.countdown-box {
+    text-align: right;
+}
+
+#countdown {
+    color: var(--blue);
+    font-size: clamp(25px, 5vw, 38px);
+    font-weight: bold;
+    margin-top: 8px;
+    font-variant-numeric: tabular-nums;
+}
+
+.schedule-section {
+    margin-top: 35px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.section-label {
+    color: var(--blue);
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    font-size: 22px;
+    margin-top: 5px;
+}
+
+.lesson-count {
+    color: var(--muted);
+    background: var(--card);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 10px;
+}
+
+.schedule {
+    display: grid;
+    gap: 9px;
+}
+
+.lesson-row {
+    background: var(--card);
+    border: 1px solid #293b53;
+    border-radius: 12px;
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    transition: 0.2s ease;
+}
+
+.lesson-row.active {
+    background: #29466B;
+    border-color: var(--blue);
+    box-shadow: 0 0 20px #3984f720;
+}
+
+.lesson-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.lesson-time {
+    color: var(--muted);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+}
+
+.lesson-state {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+}
+
+.active .lesson-state {
+    color: var(--green);
+    font-weight: bold;
+}
+
+.finished .lesson-state {
+    color: #71849c;
+}
+
+footer {
+    margin-top: 35px;
+    padding: 18px 0;
+    border-top: 1px solid #293b53;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 1.2px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    .status-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .countdown-box {
+        text-align: left;
+    }
+
+    .lesson-row {
+        padding: 14px 12px;
+    }
+
+    .lesson-name {
+        font-size: 12px;
+    }
+
+    .lesson-time {
+        font-size: 11px;
+    }
+
+    footer {
+        justify-content: center;
+        text-align: center;
+    }
+}
