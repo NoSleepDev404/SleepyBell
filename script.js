@@ -152,18 +152,18 @@ function update() {
 }
 
 renderSchedule();
-update();
 
-// Synchronizacja zegara z początkiem każdej sekundy
 function startClock() {
-    update();
-
-    const delay = 1000 - (Date.now() % 1000);
-
-    setTimeout(() => {
+    function tick() {
         update();
-        setInterval(update, 1000);
-    }, delay);
+
+        const now = Date.now();
+        const delay = 1000 - (now % 1000);
+
+        setTimeout(tick, delay);
+    }
+
+    tick();
 }
 
 startClock();
