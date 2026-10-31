@@ -151,8 +151,6 @@ function update() {
     });
 }
 
-rend
-
 renderSchedule();
 update();
 
