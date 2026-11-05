@@ -24,8 +24,8 @@
     --future-color: #29394D;
     --future-border: #3A506B;
 
-    --after-color: #202B3A;
-    --after-border: #3A4A60;
+    --after-color: #292747;
+    --after-border: #45416B;
 }
 
 /* PODSTAWOWE USTAWIENIA */
@@ -469,6 +469,6 @@ footer {
 /* DODATKOWE ZABEZPIECZENIE KOLORU PO LEKCJACH */
 
 #clock-card[data-state="after"] {
-    background: #202B3A !important;
-    border: 2px solid #3A4A60 !important;
+    background: #292747 !important;
+    border: 2px solid #45416B !important;
 }
