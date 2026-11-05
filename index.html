@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#101827">
-    <title>SleepyBell – Cyfrowy Dzwonek</title>
+    <meta name="description" content="SleepyBell – cyfrowy dzwonek szkolny i harmonogram lekcji.">
+    <title>SleepyBell – Cyfrowy Dzwonek Szkolny</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <main class="app">
+    <main class="app" id="app">
 
         <header class="header">
             <div class="brand">
                 <span class="brand-icon">◈</span>
-                <h1>Sleepy<span>Bell</span></h1>
+                <div>
+                    <h1>Sleepy<span>Bell</span></h1>
+                    <p class="brand-subtitle">CYFROWY DZWONEK SZKOLNY</p>
+                </div>
             </div>
+
             <div class="online">
                 <span class="online-dot"></span>
                 SYSTEM ONLINE
             </div>
         </header>
 
-        <section class="clock-card">
+        <section class="clock-card" id="clock-card" data-state="before">
             <div class="clock-label">AKTUALNY CZAS</div>
             <div id="clock">00:00:00</div>
             <div id="date">Ładowanie daty...</div>
@@ -51,10 +56,16 @@
             </div>
 
             <div class="schedule" id="schedule"></div>
+
+            <div class="schedule-legend">
+                <span><i class="legend-dot finished-dot"></i>Zakończona</span>
+                <span><i class="legend-dot active-dot"></i>Aktualna</span>
+                <span><i class="legend-dot future-dot"></i>Nadchodząca</span>
+            </div>
         </section>
 
         <footer>
-            <span>◈ SLEEPYBELL</span>
+            <span>👾 SLEEPYBELL</span>
             <span>CYFROWY DZWONEK SZKOLNY</span>
             <span>VERSION 6.7</span>
         </footer>
