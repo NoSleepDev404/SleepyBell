@@ -12,6 +12,36 @@ const schedule = [
 
 const $ = id => document.getElementById(id);
 
+// TRYB TESTOWY
+// Dostępne: lesson, break, break-ending, after
+
+const testMode = new URLSearchParams(
+    window.location.search
+).get("test");
+
+const testStates = {
+    lesson: {
+        status: "TRWA LEKCJA",
+        lesson: "LEKCJA 1",
+        countdown: "00:20:00"
+    },
+    break: {
+        status: "TRWA PRZERWA",
+        lesson: "PRZERWA",
+        countdown: "00:05:00"
+    },
+    "break-ending": {
+        status: "KONIEC PRZERWY",
+        lesson: "ZA CHWILĘ DZWONEK!",
+        countdown: "00:01:30"
+    },
+    after: {
+        status: "GODZINY POZALEKCYJNE",
+        lesson: "KONIEC ZAJĘĆ",
+        countdown: "KONIEC PLANU"
+    }
+};
+
 function minutes(value) {
     const [h, m] = value.split(":").map(Number);
     return h * 60 + m;
@@ -32,7 +62,9 @@ function renderSchedule() {
         <div class="lesson-row" id="lesson-${i}">
             <span class="lesson-name">${item[0]}</span>
             <span class="lesson-time">${item[1]} - ${item[2]}</span>
-            <span class="lesson-state" id="state-${i}">PLANOWANA</span>
+            <span class="lesson-state" id="state-${i}">
+                PLANOWANA
+            </span>
         </div>
     `).join("");
 }
@@ -44,22 +76,26 @@ function update() {
     const second = now.getSeconds();
     const currentSeconds = current * 60 + second;
 
-    const isWeekend = now.getDay() === 0 || now.getDay() === 6;
+    const isWeekend =
+        now.getDay() === 0 || now.getDay() === 6;
 
-    $("clock").textContent = now.toLocaleTimeString("pl-PL", {
-        hour12: false
-    });
+    $("clock").textContent = now.toLocaleTimeString(
+        "pl-PL",
+        { hour12: false }
+    );
 
-    $("date").textContent = now.toLocaleDateString("pl-PL", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-    });
+    $("date").textContent = now.toLocaleDateString(
+        "pl-PL",
+        {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
 
     let active = -1;
     let nextChange = null;
-    let nextLesson = -1;
 
     schedule.forEach((item, i) => {
         const start = minutes(item[1]);
@@ -72,7 +108,6 @@ function update() {
         if (start * 60 > currentSeconds) {
             if (nextChange === null || start < nextChange) {
                 nextChange = start;
-                nextLesson = i;
             }
         }
     });
@@ -112,7 +147,8 @@ function update() {
         state = "break";
 
         if (nextChange !== null) {
-            const remaining = nextChange * 60 - currentSeconds;
+            const remaining =
+                nextChange * 60 - currentSeconds;
 
             if (remaining > 0 && remaining <= 120) {
                 status = "KONIEC PRZERWY";
@@ -124,11 +160,21 @@ function update() {
 
     if (!isWeekend && nextChange !== null &&
         state !== "after") {
-        const remaining = nextChange * 60 - currentSeconds;
+        const remaining =
+            nextChange * 60 - currentSeconds;
+
         countdown = formatTime(Math.max(0, remaining));
     }
 
-    // Aktualizacja kolorów zegara i statusu
+    // TRYB TESTOWY
+    if (testStates[testMode]) {
+        state = testMode;
+        status = testStates[testMode].status;
+        lesson = testStates[testMode].lesson;
+        countdown = testStates[testMode].countdown;
+    }
+
+    // AKTUALIZACJA KOLORÓW
     $("app").dataset.state = state;
     $("clock-card").dataset.state = state;
 
@@ -136,9 +182,8 @@ function update() {
     $("lesson").textContent = lesson;
     $("countdown").textContent = countdown;
 
-    // Aktualizacja harmonogramu
+    // HARMONOGRAM
     schedule.forEach((item, i) => {
-        const start = minutes(item[1]);
         const end = minutes(item[2]);
 
         const row = $("lesson-" + i);
@@ -158,10 +203,13 @@ function update() {
 
         if (isWeekend) {
             stateLabel.textContent = "DZIEŃ WOLNY";
+
         } else if (active === i) {
             stateLabel.textContent = "● TERAZ";
+
         } else if (isFinished) {
             stateLabel.textContent = "ZAKOŃCZONA";
+
         } else {
             stateLabel.textContent = "PLANOWANA";
         }
