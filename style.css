@@ -464,4 +464,7 @@ footer {
         justify-content: center;
         text-align: center;
     }
+#clock-card[data-state="after"] {
+    background: #202B3A !important;
+    border: 2px solid #3A4A60 !important;
 }
