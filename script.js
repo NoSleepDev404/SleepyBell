@@ -42,6 +42,8 @@ function update() {
 
     const current = now.getHours() * 60 + now.getMinutes();
     const second = now.getSeconds();
+    const currentSeconds = current * 60 + second;
+
     const isWeekend = now.getDay() === 0 || now.getDay() === 6;
 
     $("clock").textContent = now.toLocaleTimeString("pl-PL", {
@@ -57,6 +59,7 @@ function update() {
 
     let active = -1;
     let nextChange = null;
+    let nextLesson = -1;
 
     schedule.forEach((item, i) => {
         const start = minutes(item[1]);
@@ -66,68 +69,82 @@ function update() {
             active = i;
         }
 
-        if (start > current) {
+        if (start * 60 > currentSeconds) {
             if (nextChange === null || start < nextChange) {
                 nextChange = start;
-            }
-        }
-
-        if (end > current) {
-            if (nextChange === null || end < nextChange) {
-                nextChange = end;
+                nextLesson = i;
             }
         }
     });
 
     let status = "OCZEKIWANIE";
     let lesson = "OCZEKIWANIE";
-    let statusColor = "var(--blue)";
+    let state = "before";
     let countdown = "--:--:--";
 
     if (isWeekend) {
         status = "DZIEŃ WOLNY";
         lesson = "WEEKEND";
-        statusColor = "var(--orange)";
+        state = "weekend";
         countdown = "BRAK LEKCJI";
 
     } else if (active !== -1) {
         status = "TRWA LEKCJA";
         lesson = schedule[active][0].toUpperCase();
-        statusColor = "var(--green)";
+        state = "lesson";
 
-    } else if (current < minutes("08:00")) {
+        nextChange = minutes(schedule[active][2]);
+
+    } else if (currentSeconds < minutes("08:00") * 60) {
         status = "PRZED LEKCJAMI";
         lesson = "OCZEKIWANIE";
+        state = "before";
 
-    } else if (current >= minutes("15:05")) {
+    } else if (currentSeconds >= minutes("15:05") * 60) {
         status = "GODZINY POZALEKCYJNE";
         lesson = "KONIEC ZAJĘĆ";
-        statusColor = "var(--orange)";
+        state = "after";
         countdown = "KONIEC PLANU";
 
     } else {
         status = "TRWA PRZERWA";
         lesson = "PRZERWA";
-        statusColor = "var(--orange)";
+        state = "break";
+
+        if (nextChange !== null) {
+            const remaining = nextChange * 60 - currentSeconds;
+
+            if (remaining > 0 && remaining <= 120) {
+                status = "KONIEC PRZERWY";
+                lesson = "ZA CHWILĘ DZWONEK!";
+                state = "break-ending";
+            }
+        }
     }
 
-    if (!isWeekend && nextChange !== null) {
-        const remaining = nextChange * 60 - (current * 60 + second);
+    if (!isWeekend && nextChange !== null &&
+        state !== "after") {
+        const remaining = nextChange * 60 - currentSeconds;
         countdown = formatTime(Math.max(0, remaining));
     }
 
-    $("status").textContent = status;
-    $("status").style.color = statusColor;
+    // Aktualizacja kolorów zegara i statusu
+    $("app").dataset.state = state;
+    $("clock-card").dataset.state = state;
 
+    $("status").textContent = status;
     $("lesson").textContent = lesson;
     $("countdown").textContent = countdown;
 
+    // Aktualizacja harmonogramu
     schedule.forEach((item, i) => {
         const start = minutes(item[1]);
         const end = minutes(item[2]);
 
         const row = $("lesson-" + i);
-        const state = $("state-" + i);
+        const stateLabel = $("state-" + i);
+
+        const isFinished = current >= end;
 
         row.classList.toggle(
             "active",
@@ -136,17 +153,17 @@ function update() {
 
         row.classList.toggle(
             "finished",
-            !isWeekend && current >= end
+            !isWeekend && active !== i && isFinished
         );
 
         if (isWeekend) {
-            state.textContent = "DZIEŃ WOLNY";
+            stateLabel.textContent = "DZIEŃ WOLNY";
         } else if (active === i) {
-            state.textContent = "● TERAZ";
-        } else if (current >= end) {
-            state.textContent = "ZAKOŃCZONA";
+            stateLabel.textContent = "● TERAZ";
+        } else if (isFinished) {
+            stateLabel.textContent = "ZAKOŃCZONA";
         } else {
-            state.textContent = "PLANOWANA";
+            stateLabel.textContent = "PLANOWANA";
         }
     });
 }
