@@ -8,7 +8,7 @@
     --green: #39C98A;
     --orange: #F5AE52;
 
-    /* Kolory SleepyBell 6.8 */
+    /* KOLORY STATUSÓW */
     --lesson-color: #244C7A;
     --lesson-border: #3973A9;
 
@@ -23,7 +23,12 @@
 
     --future-color: #29394D;
     --future-border: #3A506B;
+
+    --after-color: #202B3A;
+    --after-border: #3A4A60;
 }
+
+/* PODSTAWOWE USTAWIENIA */
 
 * {
     margin: 0;
@@ -46,7 +51,7 @@ body {
     margin: auto;
 }
 
-/* HEADER */
+/* NAGŁÓWEK */
 
 .header {
     display: flex;
@@ -101,36 +106,61 @@ body {
     box-shadow: 0 0 10px var(--green);
 }
 
-/* CLOCK */
+/* AKTUALNY CZAS */
 
 .clock-card {
-    background: linear-gradient(135deg, #223752, var(--card));
+    background: var(--card);
     border: 1px solid #314764;
     border-radius: 18px;
     padding: 28px;
     text-align: center;
     box-shadow: 0 15px 40px #0003;
-    transition: background 0.4s ease, border-color 0.4s ease,
-                box-shadow 0.4s ease;
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
 }
 
+/* LEKCJA - NIEBIESKI */
+
 .clock-card[data-state="lesson"] {
-    background: linear-gradient(135deg, #244C7A, #1D2A3D);
+    background: var(--lesson-color);
     border-color: var(--lesson-border);
     box-shadow: 0 12px 35px #244C7A30;
 }
 
+/* PRZERWA - ZIELONY */
+
 .clock-card[data-state="break"] {
-    background: linear-gradient(135deg, #216344, #1D2A3D);
+    background: var(--break-color);
     border-color: var(--break-border);
     box-shadow: 0 12px 35px #21634430;
 }
 
+/* OSTATNIE 2 MINUTY PRZERWY - ZŁOTY */
+
 .clock-card[data-state="break-ending"] {
-    background: linear-gradient(135deg, #80621F, #1D2A3D);
+    background: var(--warning-color);
     border-color: var(--warning-border);
     box-shadow: 0 12px 35px #80621F30;
 }
+
+/* KONIEC LEKCJI - GRAFITOWY */
+
+.clock-card[data-state="after"] {
+    background: var(--after-color);
+    border-color: var(--after-border);
+    box-shadow: 0 12px 35px #0004;
+}
+
+/* WEEKEND */
+
+.clock-card[data-state="weekend"] {
+    background: #252C38;
+    border-color: #414D60;
+}
+
+/* TEKST ZEGARA */
 
 .clock-label {
     color: var(--muted);
@@ -147,6 +177,13 @@ body {
     transition: color 0.4s ease;
 }
 
+#date {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* KOLORY GODZINY */
+
 .clock-card[data-state="lesson"] #clock {
     color: #A9D2FF;
 }
@@ -159,12 +196,15 @@ body {
     color: #FFE09A;
 }
 
-#date {
-    color: var(--muted);
-    font-size: 14px;
+.clock-card[data-state="after"] #clock {
+    color: #AAB8CA;
 }
 
-/* STATUS */
+.clock-card[data-state="weekend"] #clock {
+    color: #C0CAD8;
+}
+
+/* STATUS SYSTEMU */
 
 .status-card {
     margin-top: 18px;
@@ -211,6 +251,8 @@ body {
     transition: color 0.4s ease;
 }
 
+/* KOLORY STATUSU I ODLICZANIA */
+
 .app[data-state="lesson"] #status,
 .app[data-state="lesson"] #countdown {
     color: #70AEF9;
@@ -230,10 +272,10 @@ body {
 .app[data-state="weekend"] #countdown,
 .app[data-state="after"] #status,
 .app[data-state="after"] #countdown {
-    color: var(--orange);
+    color: #AAB8CA;
 }
 
-/* SCHEDULE */
+/* HARMONOGRAM */
 
 .schedule-section {
     margin-top: 35px;
@@ -270,6 +312,8 @@ body {
     gap: 9px;
 }
 
+/* PRZYSZŁE LEKCJE */
+
 .lesson-row {
     background: var(--future-color);
     border: 1px solid var(--future-border);
@@ -279,9 +323,13 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    transition: background 0.3s ease, border-color 0.3s ease,
-                box-shadow 0.3s ease;
+    transition:
+        background 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
 }
+
+/* AKTUALNA LEKCJA */
 
 .lesson-row.active {
     background: var(--lesson-color);
@@ -289,10 +337,14 @@ body {
     box-shadow: 0 0 20px #244C7A35;
 }
 
+/* ZAKOŃCZONE LEKCJE */
+
 .lesson-row.finished {
     background: var(--finished-color);
     border-color: var(--finished-border);
 }
+
+/* TEKST LEKCJI */
 
 .lesson-name {
     font-weight: 600;
@@ -321,7 +373,7 @@ body {
     font-weight: bold;
 }
 
-/* LEGEND */
+/* LEGENDA HARMONOGRAMU */
 
 .schedule-legend {
     display: flex;
@@ -356,7 +408,7 @@ body {
     background: var(--future-border);
 }
 
-/* FOOTER */
+/* STOPKA */
 
 footer {
     margin-top: 35px;
@@ -371,7 +423,7 @@ footer {
     letter-spacing: 1.2px;
 }
 
-/* MOBILE */
+/* WERSJA MOBILNA */
 
 @media (max-width: 600px) {
     body {
